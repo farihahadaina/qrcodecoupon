@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "270607475151",
+    "project_id": "qrcodecoupon",
+    "storage_bucket": "qrcodecoupon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270607475151:android:aa0c0941268f1e8b51b2ba",
+        "android_client_info": {
+          "package_name": "com.example.qrcodecoupon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDODxTMRTYQRbNKl4CpWTJhKLv3PqvhVUc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
