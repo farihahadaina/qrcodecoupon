@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'qrscanner.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -121,12 +122,32 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          openDialog();
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.card_membership),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 20.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              onPressed: () {
+                openDialog();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const QRScanner()),
+                );
+              },
+              tooltip: 'QR Scanner',
+              child: const Icon(Icons.qr_code_scanner),
+            ),
+            const SizedBox(width: 16),
+            FloatingActionButton(
+              onPressed: () {
+                // Handle onPressed for the card membership icon if needed
+              },
+              tooltip: 'Card Membership',
+              child: const Icon(Icons.card_membership),
+            ),
+          ],
+        ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     
       body: Center(        
