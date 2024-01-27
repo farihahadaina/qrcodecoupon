@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
+import 'routes.dart';
+import 'redemption.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({Key? key}) : super(key: key);
@@ -28,9 +30,10 @@ class _QRScannerState extends State<QRScanner> {
         setState(() {
           _qrInfo = code!;
         });
+        Navigator.pushNamed(context, '/redemption', arguments: code); // pass the code
       },
     );
-    _camState = true;
+    _camState = true; 
   }
 
   @override
@@ -91,7 +94,7 @@ class _QRScannerState extends State<QRScanner> {
               _camState = true;
             });
           }
-          Navigator.pushNamed('/qrscanner' as BuildContext, '/thirdscreen');
+          //Navigator.pushNamed('/qrscanner' as BuildContext, '/thirdscreen');
         },
       ),
     );
