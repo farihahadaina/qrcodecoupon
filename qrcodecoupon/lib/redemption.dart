@@ -59,7 +59,7 @@ class _RedemptionState extends State<Redemption> {
 @override
   void initState() {
     super.initState();
-    redeemCoupon();
+    // redeemCoupon();
 }
 
 @override
@@ -78,6 +78,11 @@ class _RedemptionState extends State<Redemption> {
       .doc(couponId)
       .get();
     if (doc.exists) {
+      await FirebaseFirestore.instance
+        .collection('coupon_entries')
+        .doc(couponId)
+        .update({'isRedeemed': true});
+         //to update the isRedeemed field to true in firebase
       setState(() {
         //couponId = widget.couponId; //couponId is empty string if no coupon ID is passed from QRScanner
         couponId = couponId;
