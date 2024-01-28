@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'routes.dart';
 import 'redemption.dart';
 
@@ -26,11 +29,42 @@ class _QRScannerState extends State<QRScanner> {
         error.toString(),
         style: const TextStyle(color: Colors.red),
       ),
-      qrCodeCallback: (code) {
-        setState(() {
-          _qrInfo = code!;
-        });
-        Navigator.pushNamed(context, '/redemption', arguments: code); // pass the code
+      qrCodeCallback: (code) async {
+        if (_camState) {
+          DocumentSnapshot doc = await FirebaseFirestore.instance
+              .collection('coupons')
+              .doc(code)
+              .get();
+
+          if (doc.exists) {
+            DateTime validity = (doc.get('validity') as Timestamp).toDate();
+            if (validity.isAfter(DateTime.now())) {
+              Navigator.pushNamed(context, '/redemption', arguments: code);
+            } else {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Coupon Expired'),
+                      content: const Text('The scanned coupon has already been redeemed.'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ]
+                    );
+                  },
+                );
+              }
+            }
+        }
+        // setState(() {
+        //   _qrInfo = code!;
+        // });
+        // Navigator.pushNamed(context, '/redemption', arguments: code); // pass the code
       },
     );
     _camState = true; 
