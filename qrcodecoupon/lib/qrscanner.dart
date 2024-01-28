@@ -55,7 +55,7 @@ class _QRScannerState extends State<QRScanner> {
                         style: TextStyle(color: Colors.red, fontSize: 24),
                       ),
                       content: const Text(
-                        'Sorry. the scanned coupon has already been redeemed.',
+                        'Sorry, the scanned coupon has already been redeemed.',
                         style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
                       actions: <Widget>[
