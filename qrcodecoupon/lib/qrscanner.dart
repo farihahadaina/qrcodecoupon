@@ -21,6 +21,10 @@ class _QRScannerState extends State<QRScanner> {
   @override
   void initState() {
     super.initState();
+    _initializeCamera();
+  }
+
+  void _initializeCamera() {
     _camera = QRBarScannerCamera(
       onError: (context, error) => Text(
         error.toString(),
@@ -30,10 +34,20 @@ class _QRScannerState extends State<QRScanner> {
         setState(() {
           _qrInfo = code!;
         });
-        Navigator.pushNamed(context, '/redemption', arguments: code); // pass the code
+        Navigator.pushNamed(context, '/redemption', arguments: code);
+        // Reset the state after a successful scan
+        _resetStateAfterScan();
       },
     );
-    _camState = true; 
+    _camState = true;
+  }
+
+  void _resetStateAfterScan() {
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        _qrInfo = 'Scan your coupon here';
+      });
+    });
   }
 
   @override
@@ -94,7 +108,6 @@ class _QRScannerState extends State<QRScanner> {
               _camState = true;
             });
           }
-          //Navigator.pushNamed('/qrscanner' as BuildContext, '/thirdscreen');
         },
       ),
     );
