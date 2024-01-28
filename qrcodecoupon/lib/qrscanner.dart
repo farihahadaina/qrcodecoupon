@@ -8,6 +8,7 @@ import 'coupon.dart';
 import 'routes.dart';
 import 'redemption.dart';
 
+
 class QRScanner extends StatefulWidget {
   const QRScanner({Key? key}) : super(key: key);
 
@@ -20,10 +21,10 @@ class _QRScannerState extends State<QRScanner> {
   // ignore: unused_field
   final GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
   late QRBarScannerCamera _camera;
-  bool _camState = false;
+  bool _camState = true; // Set to true by default
   String _qrInfo = 'Scan your coupon here';
   List<Coupon> redeemedCoupons = [];
-  
+
   @override
   void initState() {
     super.initState();
