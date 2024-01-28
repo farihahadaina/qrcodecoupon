@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
-import 'routes.dart';
-import 'redemption.dart';
+import 'coupon.dart';
+import 'listredemption.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({Key? key}) : super(key: key);
@@ -15,26 +15,41 @@ class _QRScannerState extends State<QRScanner> {
   // ignore: unused_field
   final GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
   late QRBarScannerCamera _camera;
-  bool _camState = false;
+  bool _camState = true; // Set to true by default
   String _qrInfo = 'Scan your coupon here';
+  List<Coupon> redeemedCoupons = [];
 
   @override
-  void initState() {
-    super.initState();
-    _camera = QRBarScannerCamera(
-      onError: (context, error) => Text(
-        error.toString(),
-        style: const TextStyle(color: Colors.red),
-      ),
-      qrCodeCallback: (code) {
-        setState(() {
-          _qrInfo = code!;
-        });
-        Navigator.pushNamed(context, '/redemption', arguments: code); // pass the code
-      },
-    );
-    _camState = true; 
-  }
+void initState() {
+  super.initState();
+  _camera = QRBarScannerCamera(
+    onError: (context, error) => Text(
+      error.toString(),
+      style: const TextStyle(color: Colors.red),
+    ),
+    qrCodeCallback: (id) {
+      // For simplicity, assuming default values for validity and price
+      String validity = 'default_validity';
+      double price = 0.0;
+
+      setState(() {
+        _qrInfo = id!;
+        // Create a Coupon object and add it to the redeemedCoupons list
+        Coupon coupon = Coupon(id, validity, price);
+        redeemedCoupons.add(coupon);
+      });
+
+      // Open the CouponListPage to display the list of redeemed coupons
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CouponListPage(coupons: redeemedCoupons),
+        ),
+      );
+    },
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,16 +100,9 @@ class _QRScannerState extends State<QRScanner> {
       floatingActionButton: FloatingActionButton(
         child: Icon(_camState ? Icons.pause : Icons.play_arrow),
         onPressed: () {
-          if (_camState == true) {
-            setState(() {
-              _camState = false;
-            });
-          } else {
-            setState(() {
-              _camState = true;
-            });
-          }
-          //Navigator.pushNamed('/qrscanner' as BuildContext, '/thirdscreen');
+          setState(() {
+            _camState = !_camState; // Toggle the camera state
+          });
         },
       ),
     );

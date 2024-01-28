@@ -115,7 +115,7 @@ class _RedemptionState extends State<Redemption> {
             Container(child:
               const Text(
                 'Successfully redeemed!',
-                style: TextStyle(                  
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold, 
                 ),
