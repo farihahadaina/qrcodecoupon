@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'listcoupon.dart';
+import 'coupon.dart';
 import 'routes.dart';
 import 'redemption.dart';
 
@@ -20,7 +22,8 @@ class _QRScannerState extends State<QRScanner> {
   late QRBarScannerCamera _camera;
   bool _camState = false;
   String _qrInfo = 'Scan your coupon here';
-
+  List<Coupon> redeemedCoupons = [];
+  
   @override
   void initState() {
     super.initState();
@@ -55,7 +58,7 @@ class _QRScannerState extends State<QRScanner> {
                         style: TextStyle(color: Colors.red, fontSize: 24),
                       ),
                       content: const Text(
-                        'Sorry. the scanned coupon has already been redeemed.',
+                        'Sorry, the scanned coupon has already been redeemed.',
                         style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
                       actions: <Widget>[
@@ -74,9 +77,25 @@ class _QRScannerState extends State<QRScanner> {
             }
         }
         setState(() {
-          _qrInfo = couponId!;
-        });
-        
+_qrInfo = 'Coupon Code: ${couponId!}\n';
+
+  // Assuming couponId has a format like "code_validity_price"
+  List<String> parts = couponId.split('_');
+  String code = parts[0];
+  String validity = parts[1];
+  double price = double.parse(parts[2]);
+
+  Coupon coupon = Coupon(code, validity, price);
+  redeemedCoupons.add(coupon);
+});
+
+Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => CouponListPage(coupons: redeemedCoupons),
+  ),
+);
+
         _resetStateAfterScan();
       },
     );
