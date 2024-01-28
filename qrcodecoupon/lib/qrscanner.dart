@@ -40,21 +40,25 @@ class _QRScannerState extends State<QRScanner> {
             bool isRedeemed = doc.get('isRedeemed');
             if (!isRedeemed) {
               Navigator.pushNamed(context, '/redemption', arguments: couponId);
-
             }
-            // DateTime validity = (doc.get('validity') as Timestamp).toDate();
-            // if (validity.isAfter(DateTime.now())) {}
             else {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('Coupon Already Redeemed'),
-                      content: const Text('The scanned coupon has already been redeemed.'),
+                      title: const Text(
+                        'Unsuccessful Redemption',
+                        style: TextStyle(color: Colors.red, fontSize: 24),
+                      ),
+                      content: const Text(
+                        'Sorry. the scanned coupon has already been redeemed.',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            // Navigator.of(context).pop();
+                            Navigator.pushNamed(context, '/qrscanner');
                           },
                           child: const Text('OK'),
                         ),
