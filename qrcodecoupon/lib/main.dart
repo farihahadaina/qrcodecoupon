@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:qrcodecoupon/listredemption.dart';
 import 'firebase_options.dart';
 import 'routes.dart';
 import 'redemption.dart';
@@ -25,12 +26,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         //colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),    
         //primarySwatch: Colors.cyan,    
-        primaryColor: Color(0xFFC4E2A6),
+        primaryColor: Color(0xFFB5D892),
+        colorScheme: ColorScheme.light(
+          secondary: Colors.white, // your secondary color
+        ),
       ),
       initialRoute: Routes.qrscanner,
       routes: {
         Routes.qrscanner: (context) => const QRScanner(),
         Routes.redemption: (context) => Redemption(),
+        Routes.redeemedlist: (context) => CouponList(),
       });
  }
 }
