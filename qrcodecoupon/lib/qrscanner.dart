@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'routes.dart';
-import 'redemption.dart';
+// import '../util/routes.dart';
+// import 'redemption.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({Key? key}) : super(key: key);
@@ -44,12 +44,11 @@ class _QRScannerState extends State<QRScanner> {
             bool isRedeemed = doc.get('isRedeemed');
             if (!isRedeemed) {
               Navigator.pushNamed(context, '/redemption', arguments: couponId);
-            }
-            else {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
                       title: const Text(
                         'Unsuccessful Redemption',
                         style: TextStyle(color: Colors.red, fontSize: 24),
@@ -66,17 +65,16 @@ class _QRScannerState extends State<QRScanner> {
                           },
                           child: const Text('OK'),
                         ),
-                      ]
-                    );
-                  },
-                );
-              }
+                      ]);
+                },
+              );
             }
+          }
         }
         setState(() {
           _qrInfo = couponId!;
         });
-        
+
         _resetStateAfterScan();
       },
     );
