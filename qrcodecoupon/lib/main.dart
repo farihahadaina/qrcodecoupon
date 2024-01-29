@@ -26,7 +26,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         //colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),    
         //primarySwatch: Colors.cyan,    
-        primaryColor: Color(0xFFC4E2A6),
+        primaryColor: Color(0xFFB5D892),
+        colorScheme: ColorScheme.light(
+          secondary: Colors.white, // your secondary color
+        ),
       ),
       initialRoute: Routes.qrscanner,
       routes: {

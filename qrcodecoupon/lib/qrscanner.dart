@@ -91,11 +91,15 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: const Text('Coupon Scanner'),
         centerTitle: true,
       ),
       body: _buildQRScanScreen(),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        //unselectedItemColor: Colors.white,
+        selectedItemColor: Theme.of(context).colorScheme.secondary,
         currentIndex: _currentIndex,
         onTap: (int newIndex) {
           switch (newIndex) {
@@ -126,6 +130,7 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
         child: Icon(_camState ? Icons.pause : Icons.play_arrow),
         onPressed: () {
           if (_camState == true) {
