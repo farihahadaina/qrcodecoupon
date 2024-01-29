@@ -1,4 +1,4 @@
-##**Final Assessment Title: Mahabbah Food Coupon Redemption**
+##Final Assessment Title: Mahabbah Food Coupon Redemption
 
 Group Name: 2Nad
 
