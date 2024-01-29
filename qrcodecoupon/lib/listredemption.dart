@@ -1,49 +1,53 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'coupon.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-class CouponList extends StatefulWidget {
-  const CouponList({Key? key}) : super(key: key);
+class ListCoupon extends StatefulWidget {
+  const ListCoupon({Key? key}) : super(key: key);
 
   @override
-  State<CouponList> createState() => _CouponListState(); 
+  State<ListCoupon> createState() => _ListCouponState();
 }
 
-class _CouponListState extends State<CouponList> {
-  List<Coupon> coupons = [];
-
-  @override
-  void initState() {
-    super.initState();
-    fetchCoupons();
-  }
-
-  Future<void> fetchCoupons() async {
-    final snapshot = await FirebaseFirestore.instance
-      .collection('coupon_entries')
-      .where('isRedeemed', isEqualTo: true)
-      .get();
-    final coupons = snapshot.docs.map((doc) => Coupon.fromSnapshot(doc)).toList();
-    setState(() {
-      this.coupons = coupons as List<Coupon>;
-    });
-  }
+class _ListCouponState extends State<ListCoupon> {
+  final _userStream =
+      FirebaseFirestore.instance.collection('coupon.entries').snapshots();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Redeemed Coupons'),
+        title: const Text('My Coupon'),
       ),
-      body: ListView.builder(
-        itemCount: coupons.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text('Coupon ID: ${coupons[index].code}'),
-            subtitle: Text('Price: \$${coupons[index].price}', style: const TextStyle(fontSize: 18)),
-            trailing: Text('Expiry Date: ${coupons[index].validity}', style: const TextStyle(fontSize: 18)),
+      body: StreamBuilder(
+        stream: _userStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Connection error');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('Loading...');
+          }
+
+          var docs = snapshot.data!.docs;
+          //return Text('${docs.length}');
+          return ListView.builder(
+            itemCount: docs.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  leading: const Icon(Icons.qr_code),
+                  title: Text(docs[index]['couponId']),
+                  subtitle: Text(docs[index]['validity'].toString()),
+                  trailing: Text(docs[index]['price'].toString()),
+                ),
+              );
+            },
           );
         },
       ),
     );
-  }}
+  }
+}

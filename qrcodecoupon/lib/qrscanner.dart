@@ -3,15 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:qrcodecoupon/listredemption.dart';
+import 'coupon.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _QRScannerState createState() => _QRScannerState();
 }
 
 class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMixin {
+  // ignore: unused_field
   final GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
   late QRBarScannerCamera _camera;
   bool _camState = false;
@@ -70,8 +74,16 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
           }
         }
         setState(() {
-          _qrInfo = couponId!;
-        });
+        _qrInfo = couponId!;
+        <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/listredemption');
+            },
+            child: const Text('OK'),
+          ),
+        ];
+      });
 
         _resetStateAfterScan();
       },
@@ -138,7 +150,7 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
           ),
           // Replace these with your actual screens
           const QRScanner(),
-          //const CouponListPage(),
+          const ListCoupon(),
           //const UserProfilePage(),          
         ],
       ),
