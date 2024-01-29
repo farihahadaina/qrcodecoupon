@@ -4,6 +4,7 @@ import 'firebase_options.dart';
 import 'routes.dart';
 import 'redemption.dart';
 import 'qrscanner.dart';
+import 'listredemption.dart';
 
 Future<void> main() async {
  WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Routes.qrscanner: (context) => const QRScanner(),
         Routes.redemption: (context) => Redemption(),
+        Routes.listredemption: (context) => ListCoupon(),
       });
  }
 }

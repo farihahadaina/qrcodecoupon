@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'coupon.dart';
 
 class ListCoupon extends StatefulWidget {
   const ListCoupon({Key? key}) : super(key: key);
@@ -11,6 +10,7 @@ class ListCoupon extends StatefulWidget {
 }
 
 class _ListCouponState extends State<ListCoupon> {
+    List<Coupon> coupons = [];
   final _userStream =
       FirebaseFirestore.instance.collection('coupon.entries').snapshots();
 
@@ -39,9 +39,9 @@ class _ListCouponState extends State<ListCoupon> {
               return Card(
                 child: ListTile(
                   leading: const Icon(Icons.qr_code),
-                  title: Text(docs[index]['couponId']),
-                  subtitle: Text(docs[index]['validity'].toString()),
-                  trailing: Text(docs[index]['price'].toString()),
+                title: Text('Coupon ID: ${coupons[index].code}'),
+                 subtitle: Text('Price: \$${coupons[index].price}', style: const TextStyle(fontSize: 18)),
+                trailing: Text('Validity: ${coupons[index].validity}', style: const TextStyle(fontSize: 18)),
                 ),
               );
             },
