@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'qrscanner.dart';
 
 class Redemption extends StatefulWidget {
  const Redemption({Key? key}) : super(key: key);
-
  @override
  State<Redemption> createState() => _RedemptionState();  
 }
@@ -19,29 +16,27 @@ class _RedemptionState extends State<Redemption> {
  @override
  void didChangeDependencies() {
     super.didChangeDependencies();
-    final String couponId = ModalRoute.of(context)!.settings.arguments as String;
+    final String couponId =
+        ModalRoute.of(context)!.settings.arguments as String;
     this.couponId = couponId;
  }
 
  Future<void> redeemCoupon() async {
     DocumentSnapshot doc = await FirebaseFirestore.instance
-      .collection('coupon_entries')
-      .doc(couponId)
-      .get();
-    if (doc.exists) {
-      await FirebaseFirestore.instance
         .collection('coupon_entries')
         .doc(couponId)
+
         .update({'isRedeemed': true});
       setState(() {
         couponId = couponId;
+
         validity = (doc.get('validity') as Timestamp).toDate();
         price = doc.get('price');
       });
     } else {
       couponId = 'No coupon found with this ID';
     }
- }
+  }
 
  @override
  Widget build(BuildContext context) {
@@ -128,5 +123,5 @@ class _RedemptionState extends State<Redemption> {
         }
       },
     );
- }
+  }
 }

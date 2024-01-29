@@ -47,23 +47,23 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: const Text(
-                      'Unsuccessful Redemption',
-                      style: TextStyle(color: Colors.red, fontSize: 24),
-                    ),
-                    content: const Text(
-                      'Sorry, the scanned coupon has already been redeemed.',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/qrscanner');
-                        },
-                        child: const Text('OK'),
+                      title: const Text(
+                        'Unsuccessful Redemption',
+                        style: TextStyle(color: Colors.red, fontSize: 24),
                       ),
-                    ],
-                  );
+                      content: const Text(
+                        'Sorry, the scanned coupon has already been redeemed.',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/qrscanner');
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ]);
+                   
                 },
               );
             }
