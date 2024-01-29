@@ -4,6 +4,6 @@ class Routes {
   static const qrscanner = '/qrscanner';
   static const redeemedlist = '/listredemption';
   static const register = '/register';
-  static const logout = '/logout';
+  static const profile = '/profile';
+  static const String logout = '/logout';
 }
-

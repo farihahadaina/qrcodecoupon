@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qrcodecoupon/auth.dart';
+import 'package:qrcodecoupon/routes.dart';
 
 class Logout extends StatelessWidget {
   Logout({Key? key}) : super(key: key);
@@ -11,22 +12,23 @@ class Logout extends StatelessWidget {
     await Auth().signOut();
   }
 
-  Widget _title() {
-    return const Text('Logout');
-  }
-
-  Widget _userUid() {
-    return Text('Email: ${user?.email ?? 'User email'}');
-  }
-
   Widget _message() {
-    return const Text('Are you sure you want to log out.');
+    return const Text(
+      'Are you sure want to logout?',
+      style: TextStyle(fontSize: 21), // Increase the font size here
+    );
   }
 
-  Widget _signOutButton() {
+  Widget _signOutButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: _signOut,
-      child: const Text('Sign Out'),
+      onPressed: () async {
+        await FirebaseAuth.instance.signOut();
+        Navigator.pushReplacementNamed(context, Routes.login);
+      },
+      child: const Text(
+        'Sign Out',
+        style: TextStyle(fontSize: 21),
+      ),
     );
   }
 
@@ -34,7 +36,7 @@ class Logout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: _title(),
+          title: const Text('Logging out...'),
         ),
         body: Container(
             height: double.infinity,
@@ -44,9 +46,14 @@ class Logout extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  _userUid(),
-                  _message(),
-                  _signOutButton(),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: _message(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: _signOutButton(context),
+                  ),
                 ])));
   }
 }

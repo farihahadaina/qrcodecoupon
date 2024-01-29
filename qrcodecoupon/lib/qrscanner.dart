@@ -12,12 +12,13 @@ class QRScanner extends StatefulWidget {
   _QRScannerState createState() => _QRScannerState();
 }
 
-class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMixin {
+class _QRScannerState extends State<QRScanner>
+    with SingleTickerProviderStateMixin {
   final GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
   late QRBarScannerCamera _camera;
   bool _camState = false;
   String _qrInfo = 'Scan your coupon here';
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
 
   @override
   void initState() {
@@ -63,7 +64,6 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
                           child: const Text('OK'),
                         ),
                       ]);
-                   
                 },
               );
             }
@@ -109,9 +109,9 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
             case 1:
               Navigator.pushNamed(context, Routes.redeemedlist);
               break;
-            // case 2:
-            //   Navigator.pushNamed(context, '/account');
-            //   break;
+            case 2:
+              Navigator.pushNamed(context, Routes.profile);
+              break;
           }
         },
         items: const <BottomNavigationBarItem>[
@@ -145,9 +145,9 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
         },
       ),
     );
- }
+  }
 
- Widget _buildQRScanScreen() {
+  Widget _buildQRScanScreen() {
     return Column(
       children: <Widget>[
         Expanded(
@@ -162,14 +162,14 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
               Align(
                 alignment: Alignment.center,
                 child: Container(
-                 width: 200,
-                 height: 200,
-                 decoration: BoxDecoration(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.red,
                       width: 4,
                     ),
-                 ),
+                  ),
                 ),
               ),
             ],
@@ -187,5 +187,5 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
         ),
       ],
     );
- }
+  }
 }

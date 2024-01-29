@@ -8,10 +8,11 @@ class CouponList extends StatefulWidget {
   const CouponList({Key? key}) : super(key: key);
 
   @override
-  State<CouponList> createState() => _CouponListState(); 
+  State<CouponList> createState() => _CouponListState();
 }
 
-class _CouponListState extends State<CouponList> with SingleTickerProviderStateMixin {
+class _CouponListState extends State<CouponList>
+    with SingleTickerProviderStateMixin {
   List<Coupon> coupons = [];
   // late TabController _tabController;
   int _currentIndex = 0;
@@ -25,10 +26,11 @@ class _CouponListState extends State<CouponList> with SingleTickerProviderStateM
 
   Future<void> fetchCoupons() async {
     final snapshot = await FirebaseFirestore.instance
-      .collection('coupon_entries')
-      .where('isRedeemed', isEqualTo: true)
-      .get();
-    final coupons = snapshot.docs.map((doc) => Coupon.fromSnapshot(doc)).toList();
+        .collection('coupon_entries')
+        .where('isRedeemed', isEqualTo: true)
+        .get();
+    final coupons =
+        snapshot.docs.map((doc) => Coupon.fromSnapshot(doc)).toList();
     setState(() {
       this.coupons = coupons as List<Coupon>;
     });
@@ -46,8 +48,10 @@ class _CouponListState extends State<CouponList> with SingleTickerProviderStateM
         itemBuilder: (context, index) {
           return ListTile(
             title: Text('Coupon ID: ${coupons[index].code}'),
-            subtitle: Text('Price: \$${coupons[index].price}', style: const TextStyle(fontSize: 18)),
-            trailing: Text('Expiry Date: ${coupons[index].validity}', style: const TextStyle(fontSize: 18)),
+            subtitle: Text('Price: \$${coupons[index].price}',
+                style: const TextStyle(fontSize: 18)),
+            trailing: Text('Expiry Date: ${coupons[index].validity}',
+                style: const TextStyle(fontSize: 18)),
           );
         },
       ),
@@ -67,9 +71,9 @@ class _CouponListState extends State<CouponList> with SingleTickerProviderStateM
             case 1:
               Navigator.pushNamed(context, Routes.redeemedlist);
               break;
-            // case 2:
-            //   Navigator.pushNamed(context, '/account');
-            //   break;
+            case 2:
+              Navigator.pushNamed(context, Routes.profile);
+              break;
           }
         },
         items: const <BottomNavigationBarItem>[

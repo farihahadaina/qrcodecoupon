@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:qrcodecoupon/listredemption.dart';
 import 'package:qrcodecoupon/loginscreen.dart';
 import 'package:qrcodecoupon/logoutscreen.dart';
+import 'package:qrcodecoupon/profilescreen.dart';
 import 'package:qrcodecoupon/registerscreen.dart';
 import 'firebase_options.dart';
 import 'routes.dart';
@@ -24,24 +25,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Mahabbah Food Coupon',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),    
-        //primarySwatch: Colors.cyan,    
-        primaryColor: Color(0xFFB5D892),
-        colorScheme: ColorScheme.light(
-          secondary: Colors.white, // your secondary color
+        title: 'Mahabbah Food Coupon',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          //colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
+          //primarySwatch: Colors.cyan,
+          primaryColor: const Color(0xFFB5D892),
+          colorScheme: const ColorScheme.light(
+            secondary: Colors.white, // your secondary color
+          ),
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(fontSize: 20.0),
+            bodyMedium: TextStyle(fontSize: 20.0),
+            // Other styles...
+          ),
         ),
-      ),
-      initialRoute: Routes.qrscanner,
-      routes: {
-        Routes.login: (context) => const LoginPage(),
-        Routes.register: (context) => const RegisterPage(),
-        Routes.qrscanner: (context) => const QRScanner(),
-        Routes.redemption: (context) => Redemption(),
-        Routes.redeemedlist: (context) => CouponList(),
-        Routes.logout: (context) => Logout(),
-      });
- }
+        initialRoute: Routes.qrscanner,
+        routes: {
+          Routes.login: (context) => const LoginPage(),
+          Routes.register: (context) => const RegisterPage(),
+          Routes.qrscanner: (context) => const QRScanner(),
+          Routes.redemption: (context) => Redemption(),
+          Routes.redeemedlist: (context) => CouponList(),
+          Routes.profile: (context) => const ProfilePage(),
+          Routes.logout: (context) => Logout(),
+        });
+  }
 }

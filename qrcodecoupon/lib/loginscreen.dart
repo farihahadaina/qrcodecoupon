@@ -119,7 +119,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              _submitButton(context),
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: _submitButton(context),
+              ),
               _loginOrRegisterButton(),
             ],
           ),
