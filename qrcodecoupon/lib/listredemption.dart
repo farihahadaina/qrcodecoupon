@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qrcodecoupon/qrscanner.dart';
 import 'coupon.dart';
-import 'package:qrcodecoupon/routes.dart';
 
 class CouponList extends StatefulWidget {
   const CouponList({Key? key}) : super(key: key);
@@ -13,14 +12,13 @@ class CouponList extends StatefulWidget {
 
 class _CouponListState extends State<CouponList> with SingleTickerProviderStateMixin {
   List<Coupon> coupons = [];
-  // late TabController _tabController;
-  int _currentIndex = 0;
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     fetchCoupons();
-    // _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   Future<void> fetchCoupons() async {
@@ -38,54 +36,56 @@ class _CouponListState extends State<CouponList> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
         title: const Text('Redeemed Coupons'),
+      bottom: TabBar(
+          controller: _tabController,
+          tabs: const <Widget>[
+            Tab(
+              icon: Icon(Icons.qr_code_scanner_sharp),
+            ),
+            Tab(
+              icon: Icon(Icons.list),
+            ),
+            Tab(
+              icon: Icon(Icons.account_circle_outlined),
+            ),
+          ],
+        ),
       ),
-      body: ListView.builder(
-        itemCount: coupons.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text('Coupon ID: ${coupons[index].code}'),
-            subtitle: Text('Price: \$${coupons[index].price}', style: const TextStyle(fontSize: 18)),
-            trailing: Text('Expiry Date: ${coupons[index].validity}', style: const TextStyle(fontSize: 18)),
-          );
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        //unselectedItemColor: Colors.white,
-        selectedItemColor: Theme.of(context).colorScheme.secondary,
-        currentIndex: _currentIndex,
-        onTap: (int newIndex) {
-          setState(() {
-            _currentIndex = newIndex;
-          });
-          switch (newIndex) {
-            case 0:
-              Navigator.pushNamed(context, Routes.qrscanner);
-              break;
-            case 1:
-              Navigator.pushNamed(context, Routes.redeemedlist);
-              break;
-            // case 2:
-            //   Navigator.pushNamed(context, '/account');
-            //   break;
-          }
-        },
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.qr_code_scanner_sharp),
-            label: 'Scan',
+      body: TabBarView(
+        controller: _tabController,
+        children: <Widget>[
+          ListView.builder(
+            itemCount: coupons.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text('Coupon ID: ${coupons[index].code}'),
+                subtitle: Text('Price: \$${coupons[index].price}', style: const TextStyle(fontSize: 18)),
+                trailing: Text('Expiry Date: ${coupons[index].validity}', style: const TextStyle(fontSize: 18)),
+              );
+            },
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'My Coupon',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined),
-            label: 'Account',
-          ),
+          // Replace these with your actual screens
+          const QRScanner(),
+          const CouponList(),
+          //const UserProfilePage(),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: TabBar(
+          controller: _tabController,
+          tabs: const <Widget>[
+            Tab(
+              icon: Icon(Icons.qr_code_scanner_sharp),
+            ),
+            Tab(
+              icon: Icon(Icons.list),
+            ),
+            Tab(
+              icon: Icon(Icons.account_circle_outlined),
+            ),
+          ],
+        ),
       ),
     );
   }
