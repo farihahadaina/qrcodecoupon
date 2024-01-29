@@ -3,11 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'listcoupon.dart';
-import 'coupon.dart';
 import 'routes.dart';
 import 'redemption.dart';
-
 
 class QRScanner extends StatefulWidget {
   const QRScanner({Key? key}) : super(key: key);
@@ -21,9 +18,8 @@ class _QRScannerState extends State<QRScanner> {
   // ignore: unused_field
   final GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
   late QRBarScannerCamera _camera;
-  bool _camState = true; // Set to true by default
+  bool _camState = false;
   String _qrInfo = 'Scan your coupon here';
-  List<Coupon> redeemedCoupons = [];
 
   @override
   void initState() {
@@ -78,25 +74,9 @@ class _QRScannerState extends State<QRScanner> {
             }
         }
         setState(() {
-_qrInfo = 'Coupon Code: ${couponId!}\n';
-
-  // Assuming couponId has a format like "code_validity_price"
-  List<String> parts = couponId.split('_');
-  String code = parts[0];
-  String validity = parts[1];
-  double price = double.parse(parts[2]);
-
-  Coupon coupon = Coupon(code, validity, price);
-  redeemedCoupons.add(coupon);
-});
-
-Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => CouponListPage(coupons: redeemedCoupons),
-  ),
-);
-
+          _qrInfo = couponId!;
+        });
+        
         _resetStateAfterScan();
       },
     );
