@@ -3,28 +3,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import '../util/routes.dart';
-// import 'redemption.dart';
+import 'package:qrcodecoupon/listredemption.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _QRScannerState createState() => _QRScannerState();
 }
 
-class _QRScannerState extends State<QRScanner> {
-  // ignore: unused_field
+class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMixin {
   final GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
   late QRBarScannerCamera _camera;
   bool _camState = false;
   String _qrInfo = 'Scan your coupon here';
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     _initializeCamera();
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   void _initializeCamera() {
@@ -60,12 +59,12 @@ class _QRScannerState extends State<QRScanner> {
                       actions: <Widget>[
                         TextButton(
                           onPressed: () {
-                            // Navigator.of(context).pop();
                             Navigator.pushNamed(context, '/qrscanner');
                           },
                           child: const Text('OK'),
                         ),
                       ]);
+                   
                 },
               );
             }
@@ -96,44 +95,72 @@ class _QRScannerState extends State<QRScanner> {
         title: const Text('Coupon Scanner'),
         centerTitle: true,
       ),
-      body: Column(
+      body: TabBarView(
+        controller: _tabController,
         children: <Widget>[
-          Expanded(
-            flex: 5,
-            child: Stack(
-              children: <Widget>[
-                SizedBox(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: _camera,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.red,
-                        width: 4,
+          Column(
+            children: <Widget>[
+              Expanded(
+                flex: 5,
+                child: Stack(
+                  children: <Widget>[
+                    SizedBox(
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: _camera,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: 200,
+                        height: 200,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.red,
+                            width: 4,
+                          ),
+                        ),
                       ),
                     ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Text(
+                    _qrInfo,
+                    style: const TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: Text(
-                _qrInfo,
-                style: const TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
               ),
-            ),
+            ],
           ),
+          // Replace these with your actual screens
+          const QRScanner(),
+          const CouponList(),
+          //const UserProfilePage(),          
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: TabBar(
+          controller: _tabController,
+          tabs: const <Widget>[
+            Tab(
+              icon: Icon(Icons.qr_code_scanner_sharp),
+              child: Text('Scan'),
+            ),
+            Tab(
+              icon: Icon(Icons.list),
+              child: Text('My Coupon'),
+            ),
+            Tab(
+              icon: Icon(Icons.account_circle_outlined),
+              child: Text('Account'),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(_camState ? Icons.pause : Icons.play_arrow),
