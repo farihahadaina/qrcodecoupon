@@ -148,15 +148,15 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
           tabs: const <Widget>[
             Tab(
               icon: Icon(Icons.qr_code_scanner_sharp),
-              child: Text('QR Scanner'),
+              child: Text('Scan'),
             ),
             Tab(
               icon: Icon(Icons.list),
-              child: Text('Redeemed Coupons'),
+              child: Text('My Coupon'),
             ),
             Tab(
               icon: Icon(Icons.account_circle_outlined),
-              child: Text('User Profile'),
+              child: Text('Account'),
             ),
           ],
         ),
