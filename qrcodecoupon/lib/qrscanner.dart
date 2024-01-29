@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:qrcodecoupon/routes.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({Key? key}) : super(key: key);
@@ -99,10 +100,10 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
         onTap: (int newIndex) {
           switch (newIndex) {
             case 0:
-              Navigator.pushNamed(context, '/qrscanner');
+              Navigator.pushNamed(context, Routes.qrscanner);
               break;
             case 1:
-              Navigator.pushNamed(context, '/listredemption');
+              Navigator.pushNamed(context, Routes.redeemedlist);
               break;
             // case 2:
             //   Navigator.pushNamed(context, '/account');
