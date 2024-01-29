@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:qrcodecoupon/listredemption.dart';
 import 'firebase_options.dart';
 import 'routes.dart';
 import 'redemption.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Routes.qrscanner: (context) => const QRScanner(),
         Routes.redemption: (context) => Redemption(),
+        Routes.redeemedlist: (context) => CouponList(),
       });
  }
 }
