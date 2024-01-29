@@ -1,6 +1,6 @@
-##Final Assessment Title: Mahabbah Food Coupon Redemption
+# Final Assessment Title: Mahabbah Food Coupon Redemption
 
-Group Name: 2Nad
+### Group Name: 2Nad
 
 Group Members:
 1. MARYAM UMAIRAH BINTI ARMAN YATIM 2110256
@@ -9,6 +9,7 @@ Group Members:
 4. ANEESA NADIRA BINTI AMINUDDIN 2016174
 
 Introduction:
+The Mahabbah Food Coupon Redemption mobile app is a user-friendly Flutter and Firebase app designed for the IIUM community. This platform allows users to easily scan and redeem available food coupons, making the procedure more efficient and easy. To access their profile and redemption coupons, the user must first log in. This will improve the general accessibility and usefulness of the application. 
 
 Objective:
 
