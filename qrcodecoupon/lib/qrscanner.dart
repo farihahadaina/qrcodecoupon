@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:qrcodecoupon/listredemption.dart';
+import 'package:qrcodecoupon/routes.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({Key? key}) : super(key: key);
@@ -17,13 +17,12 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
   late QRBarScannerCamera _camera;
   bool _camState = false;
   String _qrInfo = 'Scan your coupon here';
-  late TabController _tabController;
+  int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _initializeCamera();
-    _tabController = TabController(length: 3, vsync: this);
   }
 
   void _initializeCamera() {
@@ -92,77 +91,46 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: const Text('Coupon Scanner'),
         centerTitle: true,
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Expanded(
-                flex: 5,
-                child: Stack(
-                  children: <Widget>[
-                    SizedBox(
-                      width: double.infinity,
-                      height: double.infinity,
-                      child: _camera,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        width: 200,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.red,
-                            width: 4,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Center(
-                  child: Text(
-                    _qrInfo,
-                    style: const TextStyle(fontSize: 20),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ],
+      body: _buildQRScanScreen(),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        //unselectedItemColor: Colors.white,
+        selectedItemColor: Theme.of(context).colorScheme.secondary,
+        currentIndex: _currentIndex,
+        onTap: (int newIndex) {
+          switch (newIndex) {
+            case 0:
+              Navigator.pushNamed(context, Routes.qrscanner);
+              break;
+            case 1:
+              Navigator.pushNamed(context, Routes.redeemedlist);
+              break;
+            // case 2:
+            //   Navigator.pushNamed(context, '/account');
+            //   break;
+          }
+        },
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code_scanner_sharp),
+            label: 'Scan',
           ),
-          // Replace these with your actual screens
-          const QRScanner(),
-          const CouponList(),
-          //const UserProfilePage(),          
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'My Coupon',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_outlined),
+            label: 'Account',
+          ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: TabBar(
-          controller: _tabController,
-          tabs: const <Widget>[
-            Tab(
-              icon: Icon(Icons.qr_code_scanner_sharp),
-              child: Text('Scan'),
-            ),
-            Tab(
-              icon: Icon(Icons.list),
-              child: Text('My Coupon'),
-            ),
-            Tab(
-              icon: Icon(Icons.account_circle_outlined),
-              child: Text('Account'),
-            ),
-          ],
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
         child: Icon(_camState ? Icons.pause : Icons.play_arrow),
         onPressed: () {
           if (_camState == true) {
@@ -177,5 +145,47 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
         },
       ),
     );
-  }
+ }
+
+ Widget _buildQRScanScreen() {
+    return Column(
+      children: <Widget>[
+        Expanded(
+          flex: 5,
+          child: Stack(
+            children: <Widget>[
+              SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: _camera,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                 width: 200,
+                 height: 200,
+                 decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.red,
+                      width: 4,
+                    ),
+                 ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Center(
+            child: Text(
+              _qrInfo,
+              style: const TextStyle(fontSize: 20),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ],
+    );
+ }
 }
