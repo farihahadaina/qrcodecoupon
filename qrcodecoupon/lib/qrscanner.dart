@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qrcodecoupon/listredemption.dart';
 // ignore: unused_import
 import 'coupon.dart';
+import 'package:qrcodecoupon/routes.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({Key? key}) : super(key: key);
@@ -119,7 +120,7 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
               Navigator.pushNamed(context, Routes.qrscanner);
               break;
             case 1:
-              Navigator.pushNamed(context, Routes.redeemedlist);
+              Navigator.pushNamed(context, Routes.listredemption);
               break;
             // case 2:
             //   Navigator.pushNamed(context, '/account');
@@ -140,8 +141,8 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
             label: 'Account',
           ),
  // Replace these with your actual screens
-          const QRScanner(),
-          const ListCoupon(),
+          //const QRScanner(),          
+          //const ListCoupon(),
           //const UserProfilePage(),          
         ],
       ),

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:qrcodecoupon/listredemption.dart';
+import 'package:qrcodecoupon/loginscreen.dart';
+import 'package:qrcodecoupon/logoutscreen.dart';
+import 'package:qrcodecoupon/registerscreen.dart';
 import 'firebase_options.dart';
 import 'routes.dart';
 import 'redemption.dart';
@@ -27,12 +31,22 @@ class MyApp extends StatelessWidget {
         //colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),    
         //primarySwatch: Colors.cyan,    
         primaryColor: Color(0xFFC4E2A6),
+        colorScheme: ColorScheme.light(
+          secondary: Colors.white, // your secondary color
+        ),
       ),
       initialRoute: Routes.qrscanner,
       routes: {
+        // Routes.qrscanner: (context) => const QRScanner(),
+        // Routes.redemption: (context) => Redemption(),
+        // Routes.listredemption: (context) => ListCoupon(),
+        
+        Routes.login: (context) => const LoginPage(),
+        Routes.register: (context) => const RegisterPage(),
         Routes.qrscanner: (context) => const QRScanner(),
         Routes.redemption: (context) => Redemption(),
         Routes.listredemption: (context) => ListCoupon(),
+        Routes.logout: (context) => Logout(),
       });
  }
 }
