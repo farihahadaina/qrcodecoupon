@@ -35,7 +35,8 @@ class _CouponListState extends State<CouponList> {
       appBar: AppBar(
         title: const Text('Redeemed Coupons'),
       ),
-      body: ListView.builder(
+      body:
+      ListView.builder(
         itemCount: coupons.length,
         itemBuilder: (context, index) {
           return ListTile(

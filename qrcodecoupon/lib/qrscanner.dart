@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:qrcodecoupon/listredemption.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({Key? key}) : super(key: key);
@@ -138,7 +139,7 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
           ),
           // Replace these with your actual screens
           const QRScanner(),
-          //const CouponListPage(),
+          const CouponList(),
           //const UserProfilePage(),          
         ],
       ),
