@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'coupon.dart';
 import 'package:qrcodecoupon/routes.dart';
@@ -11,60 +10,28 @@ class ListCoupon extends StatefulWidget {
   State<ListCoupon> createState() => _ListCouponState();
 }
 
-class _ListCouponState extends State<ListCoupon> {
+class _ListCouponState extends State<ListCoupon> with SingleTickerProviderStateMixin {
   List<Coupon> coupons = [];
   int _currentIndex = 1;
 
-Stream<QuerySnapshot<Map<String, dynamic>>> couponStream =
-    FirebaseFirestore.instance.collection('coupon.entries').snapshots();
+  final _userStream = FirebaseFirestore.instance.collection('coupon.entries').snapshots();
 
-onLoad() async {}
   @override
   void initState() {
-    onLoad();
     super.initState();
+    fetchCoupons();
   }
 
-Widget allCouponDetails() {
-  return StreamBuilder<QuerySnapshot>(
-    stream: couponStream,
-    builder: (context, snapshot) {
-      if (snapshot.hasError) {
-        return const Text('Connection error');
-      }
-
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Text('Loading...');
-      }
-
-      var docs = snapshot.data?.docs;
-
-      return snapshot.hasData ? ListView.builder(
-        itemCount: docs?.length,
-        itemBuilder: (context, index) {
-          // Access the data directly from the current document
-          final code = docs?[index].get('code');
-          final validity = docs?[index].get('validity');
-          final price = docs?[index].get('price');
-          final isRedeemed = docs?[index].get('isRedeemed');
-          final coupon = Coupon(code, validity, price, isRedeemed);
-          if (!isRedeemed) {
-            coupons.add(coupon);
-          }
-
-          return Card(
-            child: ListTile(
-              leading: const Icon(Icons.qr_code),
-              title: Text('Coupon ID: $code', style: const TextStyle(fontSize: 18)),
-              subtitle: Text('Price: \$$price', style: const TextStyle(fontSize: 18)),
-              trailing: Text('Validity: $validity', style: const TextStyle(fontSize: 18)),
-            ),
-          );
-        },
-      ) : const Text('No data');
-    },
-  );
-}
+  Future<void> fetchCoupons() async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('coupon_entries')
+        .where('isRedeemed', isEqualTo: true)
+        .get();
+    final coupons = snapshot.docs.map((doc) => Coupon.fromSnapshot(doc)).toList();
+    setState(() {
+      this.coupons = coupons as List<Coupon>;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +39,33 @@ Widget allCouponDetails() {
       appBar: AppBar(
         title: const Text('My Coupon'),
       ),
-      body:ListView(
-        children: [
-          allCouponDetails(),
-        ],
+      body: StreamBuilder(
+        stream: _userStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Connection error');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('Loading...');
+          }
+
+          var docs = snapshot.data!.docs;
+          //return Text('${docs.length}');
+          return ListView.builder(
+            itemCount: docs.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  leading: const Icon(Icons.qr_code),
+                  title: Text('Coupon ID: ${coupons[index].code}'),
+                  subtitle: Text('Price: \$${coupons[index].price}', style: const TextStyle(fontSize: 18)),
+                  trailing: Text('Validity: ${coupons[index].validity}', style: const TextStyle(fontSize: 18)),
+                ),
+              );
+            },
+          );
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -83,6 +73,9 @@ Widget allCouponDetails() {
         selectedItemColor: Theme.of(context).colorScheme.secondary,
         currentIndex: _currentIndex,
         onTap: (int newIndex) {
+          setState(() {
+            _currentIndex = newIndex;
+          });
           switch (newIndex) {
             case 0:
               Navigator.pushNamed(context, Routes.qrscanner);
@@ -112,5 +105,4 @@ Widget allCouponDetails() {
       ),
     );
   }
-  
 }
