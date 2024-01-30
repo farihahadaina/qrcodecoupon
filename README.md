@@ -10,7 +10,7 @@
 
 
 **Introduction:**
-  The Mahabbah Food Coupon Redemption mobile app is a user-friendly Flutter and Firebase app designed for the IIUM community. This platform allows users to easily scan and redeem available food coupons, making the procedure more efficient and easy. To access their profile and redemption coupons, the user must first log in. This will improve the general accessibility and usefulness of the application. 
+  The Mahabbah Food Coupon Redemption mobile app is a user-friendly Flutter and Firebase app designed for the IIUM community. This platform allows users to easily scan and redeem available food coupons, making the procedure more efficient and easy. To access their profile and redemption coupons, the user must first log in. Once logged in with a valid email and password, the user may scan their coupon for redemption and check a list of coupons they have already redeemed. This will improve the general accessibility and usefulness of the application. 
 
 
 **Objective:**
@@ -63,6 +63,6 @@
 
 
 **References:**
-- https://api.flutter.dev/flutter/material/BottomNavigationBar-class.html
-- https://www.qr-code-generator.com/
+- Flutter Official Documentation. Retrieve on 28 January 2024 from https://api.flutter.dev/flutter/material/BottomNavigationBar-class.html
+- QR Code Generator. Retrieve on 28 January 2024 from https://www.qr-code-generator.com/
 
