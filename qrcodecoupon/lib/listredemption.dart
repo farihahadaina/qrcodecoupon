@@ -41,7 +41,7 @@ class _ListCouponState extends State<ListCoupon> {
 
  Widget allCouponDetails() {
     return Container(
-      height: 600, // Adjust this value as needed
+      height: 600, 
       child: coupons.isEmpty ? const Text('No data') : ListView.builder(
         itemCount: coupons.length,
         itemBuilder: (context, index) {
@@ -49,12 +49,18 @@ class _ListCouponState extends State<ListCoupon> {
           return Card(
             child: ListTile(
               leading: const Icon(Icons.qr_code),
-              title: Text('Coupon ID: ${coupon.couponId}', style: const TextStyle(fontSize: 18)),
-              subtitle: Text('Price: \$${coupon.price}', style: const TextStyle(fontSize: 18)),
-              trailing: Text('Validity: ${coupon.validity}', style: const TextStyle(fontSize: 18)),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Coupon ID: ${coupon.couponId}', style: const TextStyle(fontSize: 18)),
+                  const SizedBox(height: 10), 
+                  Text('Price: \$${coupon.price}', style: const TextStyle(fontSize: 18)),
+                  const SizedBox(height: 10), 
+                  Text('Validity: ${coupon.validity}', style: const TextStyle(fontSize: 18)),
+                ],
+              ),
             ),
-          );
-        },
+          );        },
       ),
     );
  }
