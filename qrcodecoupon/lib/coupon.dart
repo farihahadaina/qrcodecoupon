@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Coupon {
-  //final String code;
   final String couponId;
   final String validity;
   final int price;

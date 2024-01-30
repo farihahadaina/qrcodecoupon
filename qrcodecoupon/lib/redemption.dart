@@ -1,6 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'qrscanner.dart';
 
@@ -54,11 +54,15 @@ class _RedemptionState extends State<Redemption> {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Theme.of(context).primaryColor,
-              title: const Text('Mahabbah Food Coupon'),
+              title: const Text(
+                'Mahabbah Food Coupon',
+                style: TextStyle(color: Colors.purple),
+              ),
               leading: IconButton(
                 icon: const Icon(
                   Icons.close,
-                  size: 20
+                  size: 20,
+                  color: Colors.purple,
                 ),                
                 onPressed: () {
                   Navigator.push(

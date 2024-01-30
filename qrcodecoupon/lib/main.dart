@@ -9,7 +9,6 @@ import 'firebase_options.dart';
 import 'routes.dart';
 import 'redemption.dart';
 import 'qrscanner.dart';
-import 'listredemption.dart';
 
 Future<void> main() async {
  WidgetsFlutterBinding.ensureInitialized();
@@ -28,25 +27,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Mahabbah Food Coupon',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),    
-        //primarySwatch: Colors.cyan,    
-        primaryColor: Color(0xFFC4E2A6),
-        colorScheme: ColorScheme.light(
-        secondary: Colors.white, // your secondary color
+      theme: ThemeData(   
+        primaryColor: const Color(0xFFC4E2A6),
+        colorScheme: const ColorScheme.light(
+        secondary: Colors.purple,
         ),
       ),
       initialRoute: Routes.login,
       routes: {
-        // Routes.qrscanner: (context) => const QRScanner(),
-        // Routes.redemption: (context) => Redemption(),
-        // Routes.listredemption: (context) => ListCoupon(),
-        
         Routes.login: (context) => const LoginPage(),
         Routes.register: (context) => const RegisterPage(),
         Routes.qrscanner: (context) => const QRScanner(),
-        Routes.redemption: (context) => Redemption(),
-        Routes.listredemption: (context) => ListCoupon(),
+        Routes.redemption: (context) => const Redemption(),
+        Routes.listredemption: (context) => const ListCoupon(),
         Routes.profile: (context) => const ProfilePage(),
         Routes.logout: (context) => Logout(),
       });

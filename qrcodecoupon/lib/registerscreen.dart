@@ -56,9 +56,6 @@ class _RegisterPageState extends State<RegisterPage> {
             errorMessage =
                 'The account already exists for that email. Login instead.';
             break;
-          // default:
-          //   errorMessage =
-          //       'An unknown error occurred with error code: ${e.code}.';
         }
       });
     }
@@ -84,7 +81,6 @@ class _RegisterPageState extends State<RegisterPage> {
             children: <Widget>[
               TextFormField(
                 controller: _controllerEmail,
-                // validator: validator.validateEmail,
                 decoration: InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(
@@ -96,7 +92,6 @@ class _RegisterPageState extends State<RegisterPage> {
               TextFormField(
                 controller: _controllerPassword,
                 obscureText: _isHiddenPassword,
-                // validator: validator.validatePassword,
                 decoration: InputDecoration(
                   labelText: 'Password',
                   suffix: InkWell(
@@ -116,10 +111,6 @@ class _RegisterPageState extends State<RegisterPage> {
               TextFormField(
                 controller: _controllerConfirmPassword,
                 obscureText: _isHiddenPassword,
-                // validator: (value) {
-                //   return validator.validateRepeatPassword(
-                //       value, _controllerPassword.text);
-                // },
                 decoration: InputDecoration(
                   labelText: 'Confirm Password',
                   suffix: InkWell(

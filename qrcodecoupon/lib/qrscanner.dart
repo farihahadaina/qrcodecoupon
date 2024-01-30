@@ -3,9 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:qrcodecoupon/listredemption.dart';
-// ignore: unused_import
-import 'coupon.dart';
 import 'package:qrcodecoupon/routes.dart';
 
 class QRScanner extends StatefulWidget {
@@ -104,7 +101,10 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: const Text('Coupon Scanner'),
+        title: const Text(
+          'Coupon Scanner',
+          style: TextStyle(color: Colors.purple),
+        ),
         centerTitle: true,
       ),
       body: _buildQRScanScreen(),
