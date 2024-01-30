@@ -72,6 +72,9 @@ class _ListCouponState extends State<ListCoupon> with SingleTickerProviderStateM
         selectedItemColor: Theme.of(context).colorScheme.secondary,
         currentIndex: _currentIndex,
         onTap: (int newIndex) {
+          setState(() {
+            _currentIndex = newIndex;
+          });
           switch (newIndex) {
             case 0:
               Navigator.pushNamed(context, Routes.qrscanner);
