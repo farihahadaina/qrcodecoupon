@@ -12,7 +12,7 @@ class ListCoupon extends StatefulWidget {
 
 class _ListCouponState extends State<ListCoupon> with SingleTickerProviderStateMixin {
   List<Coupon> coupons = [];
-  int _currentIndex = 0;
+  int _currentIndex = 1;
 
   final _userStream = FirebaseFirestore.instance.collection('coupon.entries').snapshots();
 
@@ -68,10 +68,14 @@ class _ListCouponState extends State<ListCoupon> with SingleTickerProviderStateM
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Theme.of(context).primaryColor,
         selectedItemColor: Theme.of(context).colorScheme.secondary,
         currentIndex: _currentIndex,
         onTap: (int newIndex) {
+          setState(() {
+            _currentIndex = newIndex;
+          });
           switch (newIndex) {
             case 0:
               Navigator.pushNamed(context, Routes.qrscanner);

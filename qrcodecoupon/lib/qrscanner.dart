@@ -22,7 +22,7 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
   late QRBarScannerCamera _camera;
   bool _camState = false;
   String _qrInfo = 'Scan your coupon here';
-  final int _currentIndex = 0;
+  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -109,11 +109,14 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
       ),
       body: _buildQRScanScreen(),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Theme.of(context).primaryColor,
-        //unselectedItemColor: Colors.white,
         selectedItemColor: Theme.of(context).colorScheme.secondary,
         currentIndex: _currentIndex,
         onTap: (int newIndex) {
+          setState(() {
+            _currentIndex = newIndex;
+          });
           switch (newIndex) {
             case 0:
               Navigator.pushNamed(context, Routes.qrscanner);
