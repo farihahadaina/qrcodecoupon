@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:qrcodecoupon/listredemption.dart';
 import 'package:qrcodecoupon/loginscreen.dart';
 import 'package:qrcodecoupon/logoutscreen.dart';
+import 'package:qrcodecoupon/profilescreen.dart';
 import 'package:qrcodecoupon/registerscreen.dart';
 import 'firebase_options.dart';
 import 'routes.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           secondary: Colors.white, // your secondary color
         ),
       ),
-      initialRoute: Routes.qrscanner,
+      initialRoute: Routes.login,
       routes: {
         // Routes.qrscanner: (context) => const QRScanner(),
         // Routes.redemption: (context) => Redemption(),
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         Routes.qrscanner: (context) => const QRScanner(),
         Routes.redemption: (context) => Redemption(),
         Routes.listredemption: (context) => ListCoupon(),
+        Routes.profile: (context) => const ProfilePage(),
         Routes.logout: (context) => Logout(),
       });
  }

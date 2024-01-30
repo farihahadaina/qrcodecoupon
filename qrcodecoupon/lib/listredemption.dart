@@ -9,10 +9,34 @@ class ListCoupon extends StatefulWidget {
   State<ListCoupon> createState() => _ListCouponState();
 }
 
-class _ListCouponState extends State<ListCoupon> {
-    List<Coupon> coupons = [];
+class _ListCouponState extends State<ListCoupon>
+    with SingleTickerProviderStateMixin {
+  List<Coupon> coupons = [];
+  // late TabController _tabController;
+  int _currentIndex = 0;
+
   final _userStream =
       FirebaseFirestore.instance.collection('coupon.entries').snapshots();
+  State<CouponList> createState() => _CouponListState();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCoupons();
+    // _tabController = TabController(length: 3, vsync: this);
+  }
+
+  Future<void> fetchCoupons() async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('coupon_entries')
+        .where('isRedeemed', isEqualTo: true)
+        .get();
+    final coupons =
+        snapshot.docs.map((doc) => Coupon.fromSnapshot(doc)).toList();
+    setState(() {
+      this.coupons = coupons as List<Coupon>;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
