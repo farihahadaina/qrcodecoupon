@@ -32,6 +32,10 @@
 
 
 **Screen navigation and widgets implementation:**
+- Screen Navigation
+
+<img src="./images/screenNavigation.png" width="60%">
+
 1. Login
 
 <img src="./images/login.jpeg" width="40%">
