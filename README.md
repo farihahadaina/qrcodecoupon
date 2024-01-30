@@ -28,6 +28,29 @@ Features and functionalities :
 7. Redeemed Coupons List: The app displays a list of redeemed QR codes along with their corresponding timestamps.
 
 Screen navigation and widgets implementation:
+1. Login
+
+<img src="./images/login.jpeg" width="40%">
+
+2. Register
+
+<img src="./images/register.jpeg" width="40%">
+
+3. Scanner with unsuccessful
+
+<img src="./images/scanner_with_unsuccessful.jpeg" width="40%">
+
+4. Redemption
+
+<img src="./images/redemption.jpeg" width="40%">
+
+5. List coupon
+
+<img src="./images/list_coupon.jpeg" width="40%">
+
+6. Profile
+
+<img src="./images/profile.jpeg" width="40%">
 
 Sequence diagram:
 
