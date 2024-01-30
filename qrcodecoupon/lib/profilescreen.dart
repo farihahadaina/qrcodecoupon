@@ -77,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Navigator.pushNamed(context, Routes.qrscanner);
               break;
             case 1:
-              Navigator.pushNamed(context, Routes.redeemedlist);
+              Navigator.pushNamed(context, Routes.listredemption);
               break;
             case 2:
               Navigator.pushNamed(context, Routes.profile);

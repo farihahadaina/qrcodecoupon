@@ -138,11 +138,7 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
             label: 'Account',
-          ),
- // Replace these with your actual screens
-          //const QRScanner(),          
-          //const ListCoupon(),
-          //const UserProfilePage(),          
+          ),         
         ],
       ),
       floatingActionButton: FloatingActionButton(
