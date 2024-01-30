@@ -13,7 +13,7 @@ class ListCoupon extends StatefulWidget {
 
 class _ListCouponState extends State<ListCoupon> {
   List<Coupon> coupons = [];
-  int _currentIndex = 0;
+  int _currentIndex = 1;
 
 Stream<QuerySnapshot<Map<String, dynamic>>> couponStream =
     FirebaseFirestore.instance.collection('coupon.entries').snapshots();
@@ -78,6 +78,7 @@ Widget allCouponDetails() {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Theme.of(context).primaryColor,
         selectedItemColor: Theme.of(context).colorScheme.secondary,
         currentIndex: _currentIndex,

@@ -109,8 +109,8 @@ class _QRScannerState extends State<QRScanner> with SingleTickerProviderStateMix
       ),
       body: _buildQRScanScreen(),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Theme.of(context).primaryColor,
-        //unselectedItemColor: Colors.white,
         selectedItemColor: Theme.of(context).colorScheme.secondary,
         currentIndex: _currentIndex,
         onTap: (int newIndex) {

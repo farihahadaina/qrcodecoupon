@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         //primarySwatch: Colors.cyan,    
         primaryColor: Color(0xFFC4E2A6),
         colorScheme: ColorScheme.light(
-          secondary: Colors.white, // your secondary color
+        secondary: Colors.white, // your secondary color
         ),
       ),
       initialRoute: Routes.login,
