@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Coupon {
-  final String code;
+  //final String code;
+  final String couponId;
   final String validity;
-  final double price;
+  final int price;
 
-  Coupon(this.code, this.validity, this.price, isRedeemed);
+  Coupon(this.couponId, this.validity, this.price, isRedeemed);
 
   static fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> doc) {}
 }

@@ -3,73 +3,68 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'coupon.dart';
 import 'package:qrcodecoupon/routes.dart';
+import 'package:intl/intl.dart';
 
 class ListCoupon extends StatefulWidget {
-  const ListCoupon({Key? key}) : super(key: key);
+ const ListCoupon({Key? key}) : super(key: key);
 
-  @override
-  State<ListCoupon> createState() => _ListCouponState();
+ @override
+ State<ListCoupon> createState() => _ListCouponState();
 }
 
 class _ListCouponState extends State<ListCoupon> {
-  List<Coupon> coupons = [];
-  int _currentIndex = 1;
+ List<Coupon> coupons = [];
+ int _currentIndex = 1;
 
-Stream<QuerySnapshot<Map<String, dynamic>>> couponStream =
-    FirebaseFirestore.instance.collection('coupon.entries').snapshots();
+ Future<void> getCoupons() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('coupon_entries').get();
+    querySnapshot.docs.forEach((doc) {
+      final couponId = doc.get('couponId');
+      final Timestamp validityTimestamp = doc.get('validity');
+      final DateTime validityDateTime = validityTimestamp.toDate();
+      final String validity = DateFormat('yyyy-MM-dd – kk:mm').format(validityDateTime);
+      final price = doc.get('price');
+      final isRedeemed = doc.get('isRedeemed');
+      final coupon = Coupon(couponId, validity, price, isRedeemed);
+      if (isRedeemed) {
+        setState(() {
+          coupons.add(coupon);
+        });
+      }
+    });
+ }
 
-onLoad() async {}
-  @override
-  void initState() {
-    onLoad();
+ @override
+ void initState() {
     super.initState();
-  }
+    getCoupons();
+ }
 
-Widget allCouponDetails() {
-  return StreamBuilder<QuerySnapshot>(
-    stream: couponStream,
-    builder: (context, snapshot) {
-      if (snapshot.hasError) {
-        return const Text('Connection error');
-      }
-
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Text('Loading...');
-      }
-
-      var docs = snapshot.data?.docs;
-
-      return snapshot.hasData ? ListView.builder(
-        itemCount: docs?.length,
+ Widget allCouponDetails() {
+    return Container(
+      height: 600, // Adjust this value as needed
+      child: coupons.isEmpty ? const Text('No data') : ListView.builder(
+        itemCount: coupons.length,
         itemBuilder: (context, index) {
-          // Access the data directly from the current document
-          final code = docs?[index].get('code');
-          final validity = docs?[index].get('validity');
-          final price = docs?[index].get('price');
-          final isRedeemed = docs?[index].get('isRedeemed');
-          final coupon = Coupon(code, validity, price, isRedeemed);
-          if (!isRedeemed) {
-            coupons.add(coupon);
-          }
-
+          final coupon = coupons[index];
           return Card(
             child: ListTile(
               leading: const Icon(Icons.qr_code),
-              title: Text('Coupon ID: $code', style: const TextStyle(fontSize: 18)),
-              subtitle: Text('Price: \$$price', style: const TextStyle(fontSize: 18)),
-              trailing: Text('Validity: $validity', style: const TextStyle(fontSize: 18)),
+              title: Text('Coupon ID: ${coupon.couponId}', style: const TextStyle(fontSize: 18)),
+              subtitle: Text('Price: \$${coupon.price}', style: const TextStyle(fontSize: 18)),
+              trailing: Text('Validity: ${coupon.validity}', style: const TextStyle(fontSize: 18)),
             ),
           );
         },
-      ) : const Text('No data');
-    },
-  );
-}
+      ),
+    );
+ }
 
-  @override
-  Widget build(BuildContext context) {
+ @override
+ Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: const Text('My Coupon'),
       ),
       body:ListView(
@@ -111,6 +106,5 @@ Widget allCouponDetails() {
         ],
       ),
     );
-  }
-  
+ }
 }
